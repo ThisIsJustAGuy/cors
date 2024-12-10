@@ -11,6 +11,7 @@ var originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
 var originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
 originWhitelist.push('https://calendar.zoho.eu');
 originWhitelist.push('https://zohoapis.eu');
+originWhitelist.push('http://localhost:4200');
 function parseEnvList(env) {
   if (!env) {
     return [];
