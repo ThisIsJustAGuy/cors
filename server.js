@@ -35,7 +35,7 @@ app.use('/zoho', function(req, res){
   };
 
   request(options).on('response', function (response){
-    res.status(response.statusCode);
+    res.json(response.data);
   }).pipe(res);
 });
 
