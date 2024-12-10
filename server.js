@@ -3,10 +3,6 @@
 var host = process.env.HOST || '0.0.0.0';
 // Listen on a specific port via the PORT environment variable
 var port = process.env.PORT || 8080;
-
-var request = require('request');
-var express = require('express');
-var app = express();
 // Grab the blacklist from the command-line so that we can update the blacklist without deploying
 // again. CORS Anywhere is open by design, and this blacklist is not used, except for countering
 // immediate abuse (e.g. denial of service). If you want to block all origins except for some,
@@ -19,27 +15,6 @@ function parseEnvList(env) {
   }
   return env.split(',');
 }
-
-
-app.use('/zoho', function(req, res){
-  var accessToken = req.params.access_token;
-  var zohoUId = req.params.zohoUId;
-  var param = req.params.param;
-  var zohoUrl = 'https://calendar.zoho.eu/api/v1/calendars/' + zohoUId + '/events?' + param;
-
-  var options = {
-    url: zohoUrl,
-    headers: {
-      'Authorization' : 'Bearer ' + accessToken,
-      'Access-Control-Allow-Origin': '*',
-    },
-  };
-
-  request(options).on('response', function (response){
-    res.json(response.data);
-  }).pipe(res);
-});
-
 
 // Set up rate-limiting to avoid abuse of the public CORS Anywhere server.
 var checkRateLimit = require('./lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
