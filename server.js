@@ -31,6 +31,7 @@ app.use('/zoho', function(req, res){
     url: zohoUrl,
     headers: {
       'Authorization' : 'Bearer ' + accessToken,
+      'Access-Control-Allow-Origin': '*',
     },
   };
 
